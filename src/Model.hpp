@@ -13,7 +13,7 @@ class Model
 	Mesh m_mesh;
 	GLuint m_vao;
 	GLuint m_vbos[2];
-	GLuint m_ibo;
+	GLuint m_ebo;
 	bool should_be_destroyed;
 
 	void setup_opengl_bs()
@@ -34,8 +34,8 @@ class Model
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (void *)(3 * sizeof(GLfloat)));
 		glEnableVertexAttribArray(1);
 
-		glGenBuffers(1, &m_ibo);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
+		glGenBuffers(1, &m_ebo);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_mesh.indices.size() * sizeof(GLushort), m_mesh.indices.data(), GL_STATIC_DRAW);
 	}
 
@@ -86,7 +86,7 @@ public:
 	{
 		glDeleteVertexArrays(1, &m_vao);
 		glDeleteBuffers(2, m_vbos);
-		glDeleteBuffers(1, &m_ibo);
+		glDeleteBuffers(1, &m_ebo);
 		should_be_destroyed = false;
 	}
 
