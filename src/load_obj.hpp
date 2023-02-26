@@ -7,9 +7,29 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <iterator>
 
 #include "Model.hpp"
 #include "Mesh.hpp"
+
+std::vector<std::string> split_at_whitespace(const std::string &s)
+{
+	std::vector<std::string> result;
+	std::istringstream ss(s);
+
+	std::copy(std::istream_iterator<std::string>(ss), std::istream_iterator<std::string>(), std::back_inserter(result));
+	return result;
+}
+
+std::string extract_first_num(const std::string &str, char delim)
+{
+	std::string result = str;
+	if (str.find(delim) != str.npos)
+	{
+		result = str.substr(0, str.find('/'));
+	}
+	return result;
+}
 
 std::optional<Model> load_obj(std::string_view filename, std::array<GLfloat, 3> color = {1.0f, 1.0f, 1.0f})
 {
@@ -17,7 +37,7 @@ std::optional<Model> load_obj(std::string_view filename, std::array<GLfloat, 3> 
 	std::fstream file(filename);
 	if (!file)
 	{
-		return model;
+		return model; // couldn't open file
 	}
 
 	std::string line;
@@ -27,37 +47,48 @@ std::optional<Model> load_obj(std::string_view filename, std::array<GLfloat, 3> 
 	std::array<std::string, 3> pos_array_str;
 	std::array<GLfloat, 3> pos_array_float;
 
+	std::string index, index1, index2, index3, index4;
+
 	while (std::getline(file, line))
 	{
-		std::stringstream ss(line);
+		auto split_string = split_at_whitespace(line);
 
-		std::string line_type;
-		ss >> line_type;
+		std::string line_type = split_string[0];
 
-		if (line_type == "v")
+		if (line_type == "v") // vertex information
 		{
-
 			for (int i = 0; i < 3; i++)
 			{
-				ss >> pos_array_str[i];
-			}
-			for (int i = 0; i < 3; i++)
-			{
-				pos_array_float[i] = std::stof(pos_array_str[i]);
+				pos_array_float[i] = std::stof(split_string[i + 1]);
 			}
 			vertices.push_back(Vertex(pos_array_float, color));
 		}
 
-		else if (line_type == "f")
+		else if (line_type == "f") // face information
 		{
-			std::string index;
+			if (split_string.size() == 5) // f looks like "f 1 2 3 4"
+			{
+
+				index1 = extract_first_num(split_string[1], '/');
+				index2 = extract_first_num(split_string[2], '/');
+				index3 = extract_first_num(split_string[3], '/');
+				index4 = extract_first_num(split_string[4], '/');
+
+				indices.push_back(std::stoi(index1) - 1);
+				indices.push_back(std::stoi(index2) - 1);
+				indices.push_back(std::stoi(index3) - 1);
+
+				indices.push_back(std::stoi(index1) - 1);
+				indices.push_back(std::stoi(index3) - 1);
+				indices.push_back(std::stoi(index4) - 1);
+
+				continue;
+			}
 			for (int i = 0; i < 3; i++)
 			{
-				ss >> index;
-				if (index.find('/') != index.npos) // unhappy path - f looks like "f 1/11/11 2/22/22 3/33/33 "
-				{
-					index = index.substr(0, index.find('/'));
-				}
+				index = split_string[i + 1];
+				index = extract_first_num(index, '/'); // just in case if line looks like "f 1/2/3 ..."
+
 				indices.push_back(std::stoi(index) - 1); // faces start at 1 :O
 			}
 		}
