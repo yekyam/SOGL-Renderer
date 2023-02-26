@@ -41,7 +41,6 @@ public:
 
 	void add_model(Model m)
 	{
-		std::cout << "Added model\n";
 		models.push_back(std::make_unique<Model>(std::move(m)));
 	}
 
