@@ -19,5 +19,12 @@ Parameters explained:
 - `(distance)` - The distance from the model itself
 - `[fps]` - Optional argument to print FPS, time per frame, and total ticks
 
-### Example:
+#### Example:
 `./main obj_files/teapot.obj GL_LINES 10`
+
+![Image of teapot](teapot.png)
+
+#### TODO:
+- [ ] Fix OBJ loader to support quad faces  (f 1 2 3 4 instead of just f 1 2 3)
+- [ ] Cleanup code
+- [ ] Add Camera system with simple controls
