@@ -26,5 +26,5 @@ Parameters explained:
 
 #### TODO:
 - [ ] Fix OBJ loader to support quad faces  (f 1 2 3 4 instead of just f 1 2 3)
-- [ ] Cleanup code
+- [ ] Cleanup code (specifically argument parsing and window management)
 - [ ] Add Camera system with simple controls
