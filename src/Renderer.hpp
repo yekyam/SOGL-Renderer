@@ -65,7 +65,7 @@ public:
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 		glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
-		for (auto &model : models)
+		for (const auto &model : models)
 		{
 			glBindVertexArray(model->m_vao);
 			glDrawElements(mode, model->m_mesh.indices.size(), GL_UNSIGNED_SHORT, 0);
