@@ -27,9 +27,10 @@ bool is_float(const std::string &str)
 int main(int argc, char **argv)
 {
 	int mode = 0;
+	bool print_fps = false;
 	if (argc < 4)
 	{
-		std::cout << "usage: ./main (obj_file) (GL_POINTS or GL_TRIANGLES or GL_LINES) (distance)\n";
+		std::cout << "usage: ./main (obj_file) (GL_POINTS or GL_TRIANGLES or GL_LINES) (distance) (optional: fps)\n";
 		std::cout << "example: ./main teapot.obj GL_LINES 10\n";
 
 		return 0;
@@ -60,6 +61,10 @@ int main(int argc, char **argv)
 		std::cout << "Invalid distance, must be a number\n";
 		std::cout << "You chose: " << argv[3];
 	}
+
+	if (argc == 5)
+		print_fps = true;
+
 	float distance = std::stof(argv[3]);
 
 	std::ios_base::sync_with_stdio(false);
@@ -120,14 +125,17 @@ int main(int argc, char **argv)
 
 		glfwSwapBuffers(window);
 
-		double current_time = glfwGetTime();
-		double delta = current_time - previous_time;
-		std::cout << "Fps: " << 1 / delta << '\n';
-		std::cout << "Time: " << delta << '\n';
-		std::cout << "Ticks: " << ticks << '\n';
-		std::cout << '\n';
-		previous_time = current_time;
-		ticks += 1;
+		if (print_fps)
+		{
+			double current_time = glfwGetTime();
+			double delta = current_time - previous_time;
+			std::cout << "Fps: " << 1 / delta << '\n';
+			std::cout << "Time: " << delta << '\n';
+			std::cout << "Ticks: " << ticks << '\n';
+			std::cout << '\n';
+			previous_time = current_time;
+			ticks += 1;
+		}
 	}
 	glfwTerminate();
 }
