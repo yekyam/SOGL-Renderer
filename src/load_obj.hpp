@@ -51,6 +51,9 @@ std::optional<Model> load_obj(std::string_view filename, std::array<GLfloat, 3> 
 
 	while (std::getline(file, line))
 	{
+		if (line.empty())
+			continue;
+
 		auto split_string = split_at_whitespace(line);
 
 		std::string line_type = split_string[0];
