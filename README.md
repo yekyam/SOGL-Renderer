@@ -29,3 +29,5 @@ Parameters explained:
 - [ ] Cleanup code (specifically argument parsing and window management)
 - [ ] Add lighting 
 - [ ] Maybe add a GUI (imGUI looks good)
+- [ ] Improve makefile (maybe move to cmake)
+- [ ] Add dependencies to repo (glfw, glew) instead of relying on system libs (low hanging fruit)
