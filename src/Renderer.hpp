@@ -1,7 +1,7 @@
 #pragma once
 
-#include <string>
 #include <list>
+#include <string>
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -9,40 +9,37 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Shader.hpp"
 #include "Model.hpp"
+#include "Shader.hpp"
 
 class Renderer
 {
-public:
+    public:
 	std::list<std::unique_ptr<Model>> models;
 	Shader shader;
 	glm::mat4 projection;
 	int mode;
 	float distance;
 
-	/* Idea: Some sort of registry system that stores the indices of the mesh's vertex
-	 * Example:
-	 * Mesh1 is added
-	 * Mesh1 has vertices 0, 1, 2
-	 * In the registry, it's stored [Mesh1, 0, 2]
-	 * Mesh2 is added
-	 * Mesh2 has vertices 3, 4, 5
-	 * In the registry, it's stored [Mesh2, 3, 5]
-	 * I choose to delete mesh1
-	 * In the registry, look for mesh1 and delete all vertices in the range
+	/* Idea: Some sort of registry system that stores the indices of the mesh's
+	 * vertex Example: Mesh1 is added Mesh1 has vertices 0, 1, 2 In the registry,
+	 * it's stored [Mesh1, 0, 2] Mesh2 is added Mesh2 has vertices 3, 4, 5 In the
+	 * registry, it's stored [Mesh2, 3, 5] I choose to delete mesh1 In the
+	 * registry, look for mesh1 and delete all vertices in the range
 	 */
 
-	Renderer(const std::string &vertexPath, const std::string &fragmentPath, int screenWidth, int screenHeight, int mode, float distance)
-		: shader(vertexPath, fragmentPath), projection(1.0f), mode(mode), distance(distance)
+	Renderer(const std::string &vertexPath,
+		 const std::string &fragmentPath,
+		 int screenWidth,
+		 int screenHeight,
+		 int mode,
+		 float distance)
+	    : shader(vertexPath, fragmentPath), projection(1.0f), mode(mode), distance(distance)
 	{
 		projection = glm::perspective(45.0f, (GLfloat)screenWidth / screenHeight, 0.1f, 500.0f);
 	}
 
-	void add_model(Model m)
-	{
-		models.push_back(std::make_unique<Model>(std::move(m)));
-	}
+	void add_model(Model m) { models.push_back(std::make_unique<Model>(std::move(m))); }
 
 	void draw_models()
 	{

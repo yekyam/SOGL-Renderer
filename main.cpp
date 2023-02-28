@@ -1,8 +1,8 @@
 #include <iostream>
 #include <optional>
-#include <string_view>
-#include <string>
 #include <sstream>
+#include <string>
+#include <string_view>
 
 #define GLEW_STATIC
 #include <GL/glew.h>
@@ -30,7 +30,8 @@ int main(int argc, char **argv)
 	bool print_fps = false;
 	if (argc < 4)
 	{
-		std::cout << "usage: ./main (obj_file) (GL_POINTS or GL_TRIANGLES or GL_LINES) (distance) (optional: fps)\n";
+		std::cout
+		    << "usage: ./main (obj_file) (GL_POINTS or GL_TRIANGLES or GL_LINES) (distance) (optional: fps)\n";
 		std::cout << "example: ./main teapot.obj GL_LINES 10\n";
 
 		return 0;
@@ -40,16 +41,13 @@ int main(int argc, char **argv)
 	if (chosen_render_mode == "GL_POINTS")
 	{
 		mode = GL_POINTS;
-	}
-	else if (chosen_render_mode == "GL_TRIANGLES")
+	} else if (chosen_render_mode == "GL_TRIANGLES")
 	{
 		mode = GL_TRIANGLES;
-	}
-	else if (chosen_render_mode == "GL_LINES")
+	} else if (chosen_render_mode == "GL_LINES")
 	{
 		mode = GL_LINES;
-	}
-	else
+	} else
 	{
 		std::cout << "Invalid render mode, must be: GL_POINTS, GL_TRIANGLES or GL_LINES\n";
 		std::cout << "You chose: " << chosen_render_mode;

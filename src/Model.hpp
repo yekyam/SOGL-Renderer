@@ -23,36 +23,44 @@ class Model
 
 		glBindVertexArray(m_vao);
 		glBindBuffer(GL_ARRAY_BUFFER, m_vbos[0]);
-		glBufferData(GL_ARRAY_BUFFER, m_mesh.vertices.size() * sizeof(Vertex), m_mesh.vertices.data(), GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER,
+			     m_mesh.vertices.size() * sizeof(Vertex),
+			     m_mesh.vertices.data(),
+			     GL_STATIC_DRAW); //
 
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), 0);
 		glEnableVertexAttribArray(0);
 
 		glBindBuffer(GL_ARRAY_BUFFER, m_vbos[1]);
-		glBufferData(GL_ARRAY_BUFFER, m_mesh.vertices.size() * sizeof(Vertex), m_mesh.vertices.data(), GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER,
+			     m_mesh.vertices.size() * sizeof(Vertex),
+			     m_mesh.vertices.data(),
+			     GL_STATIC_DRAW); //
 
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (void *)(3 * sizeof(GLfloat)));
 		glEnableVertexAttribArray(1);
 
 		glGenBuffers(1, &m_ebo);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_mesh.indices.size() * sizeof(GLushort), m_mesh.indices.data(), GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+			     m_mesh.indices.size() * sizeof(GLushort),
+			     m_mesh.indices.data(),
+			     GL_STATIC_DRAW);
 	}
 
-public:
+    public:
 	friend class Renderer;
 
 	template <size_t vertex_num, size_t index_count>
-	Model(std::array<GLfloat, vertex_num> positions, std::array<GLfloat, vertex_num> colors, std::array<GLushort, index_count> indices)
-		: m_mesh(positions, colors, indices), should_be_destroyed(true)
+	Model(std::array<GLfloat, vertex_num> positions,
+	      std::array<GLfloat, vertex_num> colors,
+	      std::array<GLushort, index_count> indices)
+	    : m_mesh(positions, colors, indices), should_be_destroyed(true)
 	{
 		setup_opengl_bs();
 	}
 
-	Model(Mesh m) : m_mesh(m), should_be_destroyed(true)
-	{
-		setup_opengl_bs();
-	}
+	Model(Mesh m) : m_mesh(m), should_be_destroyed(true) { setup_opengl_bs(); }
 
 	Model(Model &&other) : m_mesh(other.m_mesh), m_vao(other.m_vao), should_be_destroyed(true)
 	{

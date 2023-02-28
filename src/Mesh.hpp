@@ -1,7 +1,7 @@
 #pragma once
 
-#include <vector>
 #include <GL/glew.h>
+#include <vector>
 
 #include "Vertex.hpp"
 
@@ -10,12 +10,12 @@ struct Mesh
 	std::vector<Vertex> vertices;
 	std::vector<GLushort> indices;
 
-	Mesh(std::vector<Vertex> vertices, std::vector<GLushort> indices) : vertices(vertices), indices(indices)
-	{
-	}
+	Mesh(std::vector<Vertex> vertices, std::vector<GLushort> indices) : vertices(vertices), indices(indices) {}
 
 	template <size_t vertex_num, size_t index_count>
-	Mesh(std::array<GLfloat, vertex_num> positions, std::array<GLfloat, vertex_num> colors, std::array<GLushort, index_count> indices)
+	Mesh(std::array<GLfloat, vertex_num> positions,
+	     std::array<GLfloat, vertex_num> colors,
+	     std::array<GLushort, index_count> indices)
 	{
 		vertices.reserve(positions.size() / 3);
 		for (int i = 0; i < positions.size(); i += 3)

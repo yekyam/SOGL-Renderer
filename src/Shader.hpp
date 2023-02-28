@@ -1,15 +1,15 @@
 #pragma once
 
+#include <GL/glew.h>
+#include <fstream>
+#include <iostream>
+#include <sstream>
 #include <string>
 #include <string_view>
-#include <fstream>
-#include <sstream>
-#include <iostream>
-#include <GL/glew.h>
 
 class Shader
 {
-public:
+    public:
 	GLuint program;
 	Shader(const std::string &vertexPath, const std::string &fragmentPath)
 	{
@@ -88,8 +88,5 @@ public:
 		glDeleteShader(fShader);
 	}
 
-	void use()
-	{
-		glUseProgram(this->program);
-	}
+	void use() { glUseProgram(this->program); }
 };

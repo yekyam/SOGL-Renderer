@@ -1,7 +1,8 @@
 #pragma once
 
+#include <GL/glew.h>
 #include <array>
-#include <iosfwd>
+#include <iostream>
 
 struct Vertex
 {

@@ -1,31 +1,32 @@
 #pragma once
 
-#include <optional>
-#include <string_view>
 #include <array>
-#include <vector>
 #include <fstream>
+#include <iterator>
+#include <optional>
 #include <sstream>
 #include <string>
-#include <iterator>
+#include <string_view>
+#include <vector>
 
-#include "Model.hpp"
 #include "Mesh.hpp"
+#include "Model.hpp"
 
 std::vector<std::string> split_at_whitespace(const std::string &s)
 {
 	std::vector<std::string> result;
 	std::istringstream ss(s);
 
-	std::copy(std::istream_iterator<std::string>(ss), std::istream_iterator<std::string>(), std::back_inserter(result));
+	std::copy(std::istream_iterator<std::string>(ss),
+		  std::istream_iterator<std::string>(),
+		  std::back_inserter(result)); //
 	return result;
 }
 
 std::string extract_first_num(const std::string &str, char delim)
 {
 	std::string result = str;
-	if (str.find(delim) != str.npos)
-	{
+	if (str.find(delim) != str.npos) {
 		result = str.substr(0, str.find('/'));
 	}
 	return result;
@@ -35,8 +36,7 @@ std::optional<Model> load_obj(std::string_view filename, std::array<GLfloat, 3> 
 {
 	std::optional<Model> model;
 	std::fstream file(filename);
-	if (!file)
-	{
+	if (!file) {
 		return model; // couldn't open file
 	}
 
@@ -49,8 +49,7 @@ std::optional<Model> load_obj(std::string_view filename, std::array<GLfloat, 3> 
 
 	std::string index, index1, index2, index3, index4;
 
-	while (std::getline(file, line))
-	{
+	while (std::getline(file, line)) {
 		if (line.empty())
 			continue;
 
@@ -60,8 +59,7 @@ std::optional<Model> load_obj(std::string_view filename, std::array<GLfloat, 3> 
 
 		if (line_type == "v") // vertex information
 		{
-			for (int i = 0; i < 3; i++)
-			{
+			for (int i = 0; i < 3; i++) {
 				pos_array_float[i] = std::stof(split_string[i + 1]);
 			}
 			vertices.push_back(Vertex(pos_array_float, color));
@@ -87,10 +85,10 @@ std::optional<Model> load_obj(std::string_view filename, std::array<GLfloat, 3> 
 
 				continue;
 			}
-			for (int i = 0; i < 3; i++)
-			{
+			for (int i = 0; i < 3; i++) {
 				index = split_string[i + 1];
-				index = extract_first_num(index, '/'); // just in case if line looks like "f 1/2/3 ..."
+				// just in case if line looks like "f 1/2/3 ..."
+				index = extract_first_num(index, '/');
 
 				indices.push_back(std::stoi(index) - 1); // faces start at 1 :O
 			}
