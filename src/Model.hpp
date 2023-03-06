@@ -16,6 +16,10 @@ class Model
 	GLuint m_ebo;
 	bool should_be_destroyed;
 
+	/**
+	 * @brief Set the up OpenGL buffers (vbo for position, vbo for color, ebo for indices, and vao to store buffers)
+	 *
+	 */
 	void setup_opengl_bs()
 	{
 		glGenVertexArrays(1, &m_vao);
@@ -70,6 +74,12 @@ class Model
 		other.should_be_destroyed = false;
 	}
 
+	/**
+	 * @brief Destructive move - A model should have unique information, so copying models doesn;t really make sense
+	 *
+	 * @param other Other model to move from
+	 * @return Model&
+	 */
 	Model &operator=(Model &&other)
 	{
 		if (&other == this)
@@ -90,6 +100,10 @@ class Model
 		return *this;
 	}
 
+	/**
+	 * @brief Deletes buffers and vao
+	 *
+	 */
 	void cleanup()
 	{
 		glDeleteVertexArrays(1, &m_vao);
@@ -98,6 +112,10 @@ class Model
 		should_be_destroyed = false;
 	}
 
+	/**
+	 * @brief Prints simple info, like memory address, vao id, vbos id, num vertices, and num indices
+	 *
+	 */
 	void print_debug_info()
 	{
 		std::cout << "Model " << this << " info:\n";
@@ -108,6 +126,10 @@ class Model
 		std::cout << '\t' << "Num indices: " << this->m_mesh.indices.size() << '\n';
 	}
 
+	/**
+	 * @brief Destroy the Model object if it should be destroyed
+	 *
+	 */
 	~Model()
 	{
 		if (should_be_destroyed)

@@ -12,6 +12,12 @@
 #include "Mesh.hpp"
 #include "Model.hpp"
 
+/**
+ * @brief Splits a string at whitespace into a vector of strings
+ *
+ * @param s The string to split
+ * @return std::vector<std::string> The split sections of the string
+ */
 inline std::vector<std::string> split_at_whitespace(const std::string &s)
 {
 	std::vector<std::string> result;
@@ -23,6 +29,13 @@ inline std::vector<std::string> split_at_whitespace(const std::string &s)
 	return result;
 }
 
+/**
+ * @brief Extracts the first number in a given string before the delimeter i.e 15 in 15/22/50
+ *
+ * @param str The string to extract the first number from
+ * @param delim The delimeter
+ * @return std::string A string representation of the number extracted
+ */
 inline std::string extract_first_num(const std::string &str, char delim)
 {
 	std::string result = str;
@@ -33,6 +46,13 @@ inline std::string extract_first_num(const std::string &str, char delim)
 	return result;
 }
 
+/**
+ * @brief Loads a wavefront .obj file into a Model
+ *
+ * @param filename The .obj file to load
+ * @param color The color of the model, defaults to white (1.0f, 1.0f, 1.0f)
+ * @return std::optional<Model> Either None or the Model
+ */
 inline std::optional<Model> load_obj(std::string_view filename, std::array<GLfloat, 3> color = {1.0f, 1.0f, 1.0f})
 {
 	std::optional<Model> model;

@@ -4,6 +4,10 @@
 #include <array>
 #include <iostream>
 
+/**
+ * @brief Holds the position (x, y, z) and color (r, g, b) of a vertex
+ *
+ */
 struct Vertex
 {
 	std::array<GLfloat, 3> position;

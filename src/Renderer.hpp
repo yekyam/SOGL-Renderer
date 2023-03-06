@@ -12,6 +12,10 @@
 #include "Model.hpp"
 #include "Shader.hpp"
 
+/**
+ * @brief Keep track of models and render them
+ *
+ */
 class Renderer
 {
     public:
@@ -39,8 +43,17 @@ class Renderer
 		projection = glm::perspective(45.0f, (GLfloat)screenWidth / screenHeight, 0.1f, 500.0f);
 	}
 
+	/**
+	 * @brief Adds a model to the current list of models
+	 *
+	 * @param m The model to add
+	 */
 	void add_model(Model m) { models.push_back(std::make_unique<Model>(std::move(m))); }
 
+	/**
+	 * @brief Draw the models to the screen
+	 *
+	 */
 	void draw_models()
 	{
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);

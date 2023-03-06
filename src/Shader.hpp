@@ -7,6 +7,10 @@
 #include <string>
 #include <string_view>
 
+/**
+ * @brief Holds a shader program created from a vertex shader source file and a fragment shader source file
+ *
+ */
 class Shader
 {
     public:
@@ -88,5 +92,9 @@ class Shader
 		glDeleteShader(fShader);
 	}
 
+	/**
+	 * @brief Uses the shader program
+	 *
+	 */
 	void use() { glUseProgram(this->program); }
 };

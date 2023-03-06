@@ -5,6 +5,10 @@
 
 #include "Vertex.hpp"
 
+/**
+ * @brief A mesh holdes vertices and indices
+ *
+ */
 struct Mesh
 {
 	std::vector<Vertex> vertices;
